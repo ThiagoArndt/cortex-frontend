@@ -1,5 +1,14 @@
-function App() {
-  return <h1 className="text-3xl text-blue-200">Hello world!</h1>;
-}
+import AuthProvider from "./providers/authProvider";
+import RouterComponent from "./routes/router";
+import { Toaster } from "react-hot-toast";
+
+const App = () => (
+  <>
+    <AuthProvider>
+      <RouterComponent />
+    </AuthProvider>
+    <Toaster position="bottom-center" />
+  </>
+);
 
 export default App;
