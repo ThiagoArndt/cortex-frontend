@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
+import RegisterPage from "../pages/RegisterPage";
 
 function RouterComponent() {
   return (
@@ -22,6 +23,17 @@ function RouterComponent() {
             </PublicRoute>
           }
         />
+
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </Router>
   );

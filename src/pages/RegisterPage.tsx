@@ -1,40 +1,37 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../providers/authProvider";
-// import api from "../lib/axiosInstance";
-// import axios from "axios";
-import { Input } from "../components/Input";
-import loginImage from "../assets/login_image.png";
-import logoImage from "../assets/logo.png";
+import React, { useState } from "react";
 import Button from "../components/Button/Button";
-import { useState } from "react";
+import registerImage from "../assets/register_image.png";
+import logoImage from "../assets/logo.png";
+import { Input } from "../components/Input";
+import { useNavigate } from "react-router-dom";
 import FeatherIcons from "feather-icons-react";
 import Transitions from "../components/Transitions/Transitions";
+// import toast from "react-hot-toast";
+// import axios from "axios";
+// import api from "../lib/axiosInstance";
 
-function LoginPage() {
+function RegisterPage() {
   const navigate = useNavigate();
-  const { setAuthToken } = useAuth();
+  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmationPassword, setConfirmationPassword] = useState<string>("");
+
   const [showPassword, setShowPassword] = useState(true);
+  const [showConfirmationPassword, setShowConfirmationPassword] = useState(true);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //const response = await api.post(`${process.env.BASE_URL}/login`, data);
-    //setAuthToken(response.data.token);
-    setAuthToken("teste");
-    navigate("/home");
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+    //const response = await api.get(`/error`);
+    navigate("/login");
+  }
 
   return (
     <Transitions className="flex flex-col items-center justify-between h-full bg-background-color">
-      <div className="bg-white flex flex-col md:flex-row w-full h-full shadow-lg overflow-hidden relative">
+      <div className="bg-white flex flex-col md:flex-row-reverse w-full h-full shadow-lg overflow-hidden relative">
         <div className="hidden md:flex w-[60%] bg-primary-color items-center justify-center">
           <div className="text-white flex flex-col items-center">
-            <img src={loginImage} alt="" className="" />
+            <img src={registerImage} alt="" className="" />
           </div>
         </div>
 
@@ -49,8 +46,16 @@ function LoginPage() {
             </h2>
             <form
               className="w-full flex flex-col gap-5"
-              onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleLogin(e)}
+              onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleRegister(e)}
             >
+              <Input.Root>
+                <Input.Label label="Nome de Usuário" />
+                <Input.Text
+                  value={username}
+                  placeholder="Marcos Relix"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Input.Root>
               <Input.Root>
                 <Input.Label label="Email" />
                 <Input.Text
@@ -70,7 +75,7 @@ function LoginPage() {
                   >
                     <div
                       role="presentation"
-                      onClick={togglePasswordVisibility}
+                      onClick={() => setShowPassword(!showPassword)}
                       className="w-full flex justify-end cursor-pointer"
                     >
                       <FeatherIcons
@@ -82,17 +87,40 @@ function LoginPage() {
                   </Input.Text>
                 </div>
               </Input.Root>
+              <Input.Root>
+                <Input.Label label="Confirmação de senha" />
+                <div className="flex flex-col-reverse">
+                  <Input.Text
+                    value={confirmationPassword}
+                    placeholder="*******"
+                    type={showConfirmationPassword ? "password" : "text"}
+                    onChange={(e) => setConfirmationPassword(e.target.value)}
+                  >
+                    <div
+                      role="presentation"
+                      onClick={() => setShowConfirmationPassword(!showConfirmationPassword)}
+                      className="w-full flex justify-end cursor-pointer"
+                    >
+                      <FeatherIcons
+                        icon={showConfirmationPassword ? "eye-off" : "eye"}
+                        size={24}
+                        className="text-dark-grey absolute top-1/2 -translate-y-1/2 right-4"
+                      />
+                    </div>
+                  </Input.Text>
+                </div>
+              </Input.Root>
               <Button type="submit" title="Continuar" />
             </form>
             <div className="text-center w-full justify-center flex mt-6">
               <div className="text-base font-medium text-primary-color">
-                <span className="font-normal text-dark-black">Não possui cadastro?</span>{" "}
+                <span className="font-normal text-dark-black">Já possui uma conta?</span>{" "}
                 <span
                   role="presentation"
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/login")}
                   className="hover:brightness-95 cursor-pointer"
                 >
-                  Registre-se aqui.
+                  Faça login aqui.
                 </span>
               </div>
             </div>
@@ -103,4 +131,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

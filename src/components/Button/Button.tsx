@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, ReactNode } from "react";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -6,16 +6,18 @@ interface ButtonProps
     HTMLButtonElement
   > {
   title: string;
+  children?: ReactNode;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ title, className = "", ...props }, ref) => {
+  ({ title, children, className = "", ...props }, ref) => {
     return (
       <button
         ref={ref}
-        className={`w-full bg-primary-color text-white py-2 rounded-lg hover:bg-opacity-95 ${className}`}
+        className={`w-full bg-primary-color text-white text-base font-medium py-3 rounded-lg hover:bg-opacity-95 ${className}`}
         {...props}
       >
+        {children}
         {title}
       </button>
     );

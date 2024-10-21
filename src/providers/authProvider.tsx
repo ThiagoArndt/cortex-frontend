@@ -1,24 +1,31 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import Cookies from "universal-cookie";
+
 interface ChildrenInterface {
   children: JSX.Element;
 }
 
 const AuthContext = createContext<{
   token: string | null;
-  setAuthToken: (newToken: string) => void;
+  setAuthToken: (newToken: string) => Promise<void>;
 }>({
   token: null,
-  setAuthToken: () => {},
+  setAuthToken: async () => {},
 });
 
 const AuthProvider = ({ children }: ChildrenInterface) => {
-  const cookies = new Cookies(null, { path: "/" });
-  const [token, setToken] = useState(cookies.get("token"));
+  const cookies = new Cookies();
 
-  const setAuthToken = (newToken: string) => {
-    setToken(newToken);
+  const [token, setToken] = useState<string | null>(cookies.get("token"));
+
+  const setAuthToken = async (newToken: string) => {
+    try {
+      setToken(newToken);
+    } catch (error) {
+      console.error("Falha ao verificar token", error);
+      setToken(null);
+    }
   };
 
   useEffect(() => {
@@ -29,7 +36,7 @@ const AuthProvider = ({ children }: ChildrenInterface) => {
       delete axios.defaults.headers.common["Authorization"];
       cookies.remove("token");
     }
-  }, [token]);
+  }, [token, cookies]);
 
   const contextValue = useMemo(
     () => ({
