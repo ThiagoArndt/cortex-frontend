@@ -12,7 +12,9 @@ export default {
         'primary-color': '#6160FF',
         'dark-grey': '#656577',
         'background-color': '#ECEFF8',
-        'grey-color': '#F6F7FB'
+        'grey-color': '#F6F7FB',
+        grey: '#F0F0F1',
+        'green-color': '#00c875'
       }
     }
   },

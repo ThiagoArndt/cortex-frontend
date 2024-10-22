@@ -10,7 +10,7 @@ interface TransitionsInterface extends HTMLMotionProps<"div"> {
   children: ReactNode;
 }
 
-const Transitions = ({ children, ...props }: TransitionsInterface) => {
+export const Transitions = ({ children, ...props }: TransitionsInterface) => {
   return (
     <motion.div
       {...props}
@@ -24,4 +24,3 @@ const Transitions = ({ children, ...props }: TransitionsInterface) => {
     </motion.div>
   );
 };
-export default Transitions;

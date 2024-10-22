@@ -8,7 +8,7 @@ import logoImage from "../assets/logo.png";
 import Button from "../components/Button/Button";
 import { useState } from "react";
 import FeatherIcons from "feather-icons-react";
-import Transitions from "../components/Transitions/Transitions";
+import { Transitions } from "../utils/Transitions";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -52,17 +52,19 @@ function LoginPage() {
               onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleLogin(e)}
             >
               <Input.Root>
-                <Input.Label label="Email" />
+                <Input.Label htmlFor="email" label="Email" />
                 <Input.Text
+                  id="email"
                   value={email}
                   placeholder="cortex@gmail.com"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Input.Root>
               <Input.Root>
-                <Input.Label label="Senha" />
+                <Input.Label htmlFor="password" label="Senha" />
                 <div className="flex flex-col-reverse">
                   <Input.Text
+                    id="password"
                     value={password}
                     placeholder="*******"
                     type={showPassword ? "password" : "text"}
@@ -82,7 +84,7 @@ function LoginPage() {
                   </Input.Text>
                 </div>
               </Input.Root>
-              <Button type="submit" title="Continuar" />
+              <Button className="py-3" type="submit" title="Continuar" />
             </form>
             <div className="text-center w-full justify-center flex mt-6">
               <div className="text-base font-medium text-primary-color">

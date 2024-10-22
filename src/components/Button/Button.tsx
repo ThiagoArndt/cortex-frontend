@@ -7,14 +7,19 @@ interface ButtonProps
   > {
   title: string;
   children?: ReactNode;
+  hasBackground?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ title, children, className = "", ...props }, ref) => {
+  ({ title, children, hasBackground = true, className = "", ...props }, ref) => {
     return (
       <button
         ref={ref}
-        className={`w-full bg-primary-color text-white text-base font-medium py-3 rounded-lg hover:bg-opacity-95 ${className}`}
+        className={`w-full ${
+          hasBackground
+            ? "bg-primary-color text-white"
+            : "bg-transparent text-gray-700 border border-gray-300"
+        }  text-base font-medium rounded-lg hover:bg-opacity-95 ${className}`}
         {...props}
       >
         {children}

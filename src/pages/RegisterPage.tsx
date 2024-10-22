@@ -5,7 +5,7 @@ import logoImage from "../assets/logo.png";
 import { Input } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import FeatherIcons from "feather-icons-react";
-import Transitions from "../components/Transitions/Transitions";
+import { Transitions } from "../utils/Transitions";
 // import toast from "react-hot-toast";
 // import axios from "axios";
 // import api from "../lib/axiosInstance";
@@ -49,7 +49,7 @@ function RegisterPage() {
               onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleRegister(e)}
             >
               <Input.Root>
-                <Input.Label label="Nome de Usuário" />
+                <Input.Label htmlFor="username" label="Nome de Usuário" />
                 <Input.Text
                   value={username}
                   placeholder="Marcos Relix"
@@ -57,7 +57,7 @@ function RegisterPage() {
                 />
               </Input.Root>
               <Input.Root>
-                <Input.Label label="Email" />
+                <Input.Label htmlFor="email" label="Email" />
                 <Input.Text
                   value={email}
                   placeholder="cortex@gmail.com"
@@ -65,7 +65,7 @@ function RegisterPage() {
                 />
               </Input.Root>
               <Input.Root>
-                <Input.Label label="Senha" />
+                <Input.Label htmlFor="password" label="Senha" />
                 <div className="flex flex-col-reverse">
                   <Input.Text
                     value={password}
@@ -88,7 +88,7 @@ function RegisterPage() {
                 </div>
               </Input.Root>
               <Input.Root>
-                <Input.Label label="Confirmação de senha" />
+                <Input.Label htmlFor="passwordConfirmation" label="Confirmação de senha" />
                 <div className="flex flex-col-reverse">
                   <Input.Text
                     value={confirmationPassword}
@@ -110,7 +110,7 @@ function RegisterPage() {
                   </Input.Text>
                 </div>
               </Input.Root>
-              <Button type="submit" title="Continuar" />
+              <Button className="py-3" type="submit" title="Continuar" />
             </form>
             <div className="text-center w-full justify-center flex mt-6">
               <div className="text-base font-medium text-primary-color">
