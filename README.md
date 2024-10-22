@@ -14,7 +14,7 @@ O **Cortex** é um sistema de gerenciamento de tarefas projetado para ajudar equ
 
 ---
 
-## Funcionalidades Principais
+## Funcionalidades Principais (Requisitos Funcionais)
 
 ### 1. **Gerenciamento de Tarefas**
    - Criar, editar, excluir e visualizar tarefas.
