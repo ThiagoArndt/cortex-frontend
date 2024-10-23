@@ -159,12 +159,14 @@ O **Cortex** é um sistema de gerenciamento de tarefas projetado para ajudar equ
 ---
 
 ## Diagrama UML
-![diagram (2)](https://github.com/user-attachments/assets/11950c13-e563-47f6-9d40-15a39f175220)
+![image](https://github.com/user-attachments/assets/95cff135-e5ce-4073-8bea-3cbf7fe3eac7)
+
 
 ---
 
 ## Casos de Uso
-![diagram](https://github.com/user-attachments/assets/0a5c96a7-9a11-4e9a-8098-e8e285750744)
+![image](https://github.com/user-attachments/assets/96c2ede5-0d88-468f-b7a7-b569b958cd86)
+
 
 ---
 
