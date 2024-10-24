@@ -14,7 +14,9 @@ export default {
         'background-color': '#ECEFF8',
         'grey-color': '#F6F7FB',
         grey: '#F0F0F1',
-        'green-color': '#00c875'
+        'green-color': '#00c875',
+        'yellow-color': '#FDBC64',
+        'red-color': '#E8697D'
       }
     }
   },

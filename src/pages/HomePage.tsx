@@ -4,16 +4,15 @@
 import { useState } from "react";
 import logoImage from "../assets/logo.png";
 import FeatherIcon from "feather-icons-react";
-import Button from "../components/Button/Button";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
 import TaskCard from "../components/TaskCard/TaskCard";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Popover from "@radix-ui/react-popover";
-import { Transitions } from "../utils/Transitions";
 import { scaleAnimation, slideAnimation } from "../utils/animation";
 import { motion } from "framer-motion";
+import Button from "../components/Button/Button";
+
 interface ProjectInterface {
   id: number;
   title: string;
@@ -39,7 +38,7 @@ const tabs = [
 const data = [
   {
     id: "1",
-    Task: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent.",
+    Task: "Lorem ipsum dolor sit amet",
     Assigned_To: "Beltran",
     Priority: "Low",
     Due_Date: "25-May-2020",
@@ -276,89 +275,132 @@ function HomePage() {
                             <div
                               ref={provided.innerRef}
                               {...provided.droppableProps}
-                              className="min-h-[100px] flex flex-col bg-gray-100 min-w-[341px] rounded-md p-4 mr-11"
+                              className="min-h-[100px] pb-4 flex flex-col bg-gray-100 w-[280px] rounded-md items-center mr-4"
                             >
-                              <h1>{column.title}</h1>
+                              <div
+                                className={`${
+                                  column.title == "Feito"
+                                    ? "bg-green-color"
+                                    : column.title == "In Progress"
+                                    ? "bg-yellow-color"
+                                    : "bg-red-color"
+                                } w-full rounded-t-md h-10`}
+                              >
+                                <h1 className="m-2 text-white font-semibold">{column.title} / 1</h1>
+                              </div>
                               {column.items.map((item, index) => (
                                 <Dialog.Root key={item.id}>
-                                  <Dialog.Trigger>
+                                  <Dialog.Trigger className="justify-start flex w-full px-4">
                                     <TaskCard item={item} index={index} />
                                   </Dialog.Trigger>
 
                                   <Dialog.Portal>
                                     <Dialog.Overlay className="fixed inset-0 bg-blackA6 data-[state=open]:animate-overlayShow" />
-                                    <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[85vh] w-[90vw] max-w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 shadow-lg focus:outline-none">
+                                    <Dialog.Content className="fixed left-1/2 top-1/2 max-h-[100vh] max-w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 shadow-lg focus:outline-none">
                                       <Dialog.Title className="text-gray-800 text-2xl font-bold mb-4">
-                                        Edit Task
+                                        Criar tarefa
                                       </Dialog.Title>
+                                      <div className="flex h-full flex-row divide-x-2">
+                                        <div className=" min-w-[512px] flex flex-col gap-10 text-dark-black px-1">
+                                          <div className="flex flex-row gap-2 items-center">
+                                            in{" "}
+                                            <span>
+                                              <FeatherIcon icon="arrow-right" size={15} />
+                                            </span>
+                                            {item.Task}
+                                          </div>
+                                          <div className="flex flex-col gap-3">
+                                            {/* Grupo */}
+                                            <Popover.Root>
+                                              <Popover.Trigger>
+                                                <div className="flex flex-row items-center gap-24">
+                                                  <div className="flex flex-row gap-2">
+                                                    <FeatherIcon icon="circle" />
+                                                    <h1>Grupo</h1>
+                                                  </div>
+                                                  <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
+                                                    <h1 className="px-2 text-dark-black text-base font-medium">
+                                                      Criar Tarefa
+                                                    </h1>
+                                                  </div>
+                                                </div>
+                                              </Popover.Trigger>
+                                              <Popover.Portal>
+                                                <Popover.Content className="-mr-36" align="center">
+                                                  <motion.div
+                                                    className="z-20 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-64"
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    exit="exit"
+                                                    variants={scaleAnimation} // You can switch to slideAnimation if you prefer sliding
+                                                  >
+                                                    <div className="p-2">
+                                                      <div className="">
+                                                        <Popover.Close asChild>
+                                                          <button
+                                                            className="w-full flex rounded-md items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                              setSelectedGroup("Padrão")
+                                                            }
+                                                          >
+                                                            <FeatherIcon
+                                                              icon="home"
+                                                              size={15}
+                                                              className="mr-2"
+                                                            />
+                                                            Padrão
+                                                          </button>
+                                                        </Popover.Close>
+                                                        <Popover.Close asChild>
+                                                          <button
+                                                            className="w-full flex rounded-md items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                              setSelectedGroup("Kanban")
+                                                            }
+                                                          >
+                                                            <FeatherIcon
+                                                              icon="bar-chart"
+                                                              size={15}
+                                                              className="mr-2"
+                                                            />
+                                                            Kanban
+                                                          </button>
+                                                        </Popover.Close>
+                                                      </div>
+                                                    </div>
+                                                    <Popover.Arrow className="fill-current text-gray-200" />
+                                                  </motion.div>
+                                                </Popover.Content>
+                                              </Popover.Portal>
+                                            </Popover.Root>
+                                            {/* Nomear */}
+                                            <div className="flex flex-row items-center gap-24">
+                                              <div className="flex flex-row gap-2">
+                                                <FeatherIcon icon="circle" />
+                                                <h1>Grupo</h1>
+                                              </div>
+                                              <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
+                                                <h1 className="px-2 text-dark-black text-base font-medium">
+                                                  Criar Tarefa
+                                                </h1>
+                                              </div>
+                                            </div>
+                                            {/* Responsável */}
+                                            <div className="flex flex-row items-center gap-24">
+                                              <div className="flex flex-row gap-2">
+                                                <FeatherIcon icon="circle" />
+                                                <h1>Grupo</h1>
+                                              </div>
+                                              <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
+                                                <h1 className="px-2 text-dark-black text-base font-medium">
+                                                  Criar Tarefa
+                                                </h1>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
 
-                                      <div className="flex flex-col space-y-4">
-                                        <div>
-                                          <label className="block text-gray-600">Task</label>
-                                          <input
-                                            type="text"
-                                            name="Task"
-                                            value={item.Task}
-                                            onChange={() => {}}
-                                            className="w-full border border-gray-300 rounded-md p-2"
-                                          />
-                                        </div>
-                                        <div>
-                                          <label className="block text-gray-600">Assigned To</label>
-                                          <input
-                                            type="text"
-                                            name="Assigned_To"
-                                            value={item.Assigned_To}
-                                            onChange={() => {}}
-                                            className="w-full border border-gray-300 rounded-md p-2"
-                                          />
-                                        </div>
-                                        <div>
-                                          <label className="block text-gray-600">Priority</label>
-                                          <select
-                                            name="Priority"
-                                            value={item.Priority}
-                                            onChange={() => {}}
-                                            className="w-full border border-gray-300 rounded-md p-2"
-                                          >
-                                            <option value="Low">Low</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="High">High</option>
-                                          </select>
-                                        </div>
-                                        <div>
-                                          <label className="block text-gray-600">Due Date</label>
-                                          <input
-                                            type="date"
-                                            name="Due_Date"
-                                            value={item.Due_Date.split("T")[0]} // Format the date for input
-                                            className="w-full border border-gray-300 rounded-md p-2"
-                                          />
-                                        </div>
-                                        <div>
-                                          <label className="block text-gray-600">Description</label>
-                                          <textarea
-                                            name="Description"
-                                            value={item.Description}
-                                            rows={4}
-                                            className="w-full border border-gray-300 rounded-md p-2"
-                                          />
-                                        </div>
-                                      </div>
-
-                                      <div className="flex justify-between mt-6">
-                                        <Dialog.Close asChild>
-                                          <Button
-                                            hasBackground={false}
-                                            className="flex-1 mr-2"
-                                            title="Cancel"
-                                          />
-                                        </Dialog.Close>
-                                        <Button
-                                          className="flex-1"
-                                          title="Save"
-                                          onClick={() => {}}
-                                        />
+                                        <div className="bg-green-500 h-full flex-1 pt-[56px] min-w-[540px]"></div>
                                       </div>
                                     </Dialog.Content>
                                   </Dialog.Portal>
