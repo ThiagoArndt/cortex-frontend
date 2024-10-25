@@ -4,6 +4,7 @@
 import { useState } from "react";
 import logoImage from "../assets/logo.png";
 import FeatherIcon from "feather-icons-react";
+import { default as UserIcon } from "../assets/usericon.svg";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import TaskCard from "../components/TaskCard/TaskCard";
@@ -12,6 +13,7 @@ import * as Popover from "@radix-ui/react-popover";
 import { scaleAnimation, slideAnimation } from "../utils/animation";
 import { motion } from "framer-motion";
 import Button from "../components/Button/Button";
+
 
 interface ProjectInterface {
   id: number;
@@ -146,6 +148,8 @@ function HomePage() {
     }
   };
 
+  const [taskName, setTaskName] = useState<string>("Criar Tarefa")
+
   return (
     <div className="min-h-screen flex flex-col bg-background-color">
       <nav className="p-1 w-full flex justify-between items-center">
@@ -180,9 +184,8 @@ function HomePage() {
                   <div
                     role="presentation"
                     onClick={() => setSelectedProject(item)}
-                    className={`cursor-pointer items-center flex flex-row gap-2 text-dark-black p-[7px] ${
-                      selectedProject == item ? "bg-primary-color" : "bg-transparent"
-                    }  bg-opacity-15 rounded-[4px]`}
+                    className={`cursor-pointer items-center flex flex-row gap-2 text-dark-black p-[7px] ${selectedProject == item ? "bg-primary-color" : "bg-transparent"
+                      }  bg-opacity-15 rounded-[4px]`}
                   >
                     <FeatherIcon icon="sidebar" size={18} />
                     <h1 className="font-medium text-sm">{item.title}</h1>
@@ -278,13 +281,12 @@ function HomePage() {
                               className="min-h-[100px] pb-4 flex flex-col bg-gray-100 w-[280px] rounded-md items-center mr-4"
                             >
                               <div
-                                className={`${
-                                  column.title == "Feito"
-                                    ? "bg-green-color"
-                                    : column.title == "In Progress"
+                                className={`${column.title == "Feito"
+                                  ? "bg-green-color"
+                                  : column.title == "In Progress"
                                     ? "bg-yellow-color"
                                     : "bg-red-color"
-                                } w-full rounded-t-md h-10`}
+                                  } w-full rounded-t-md h-10`}
                               >
                                 <h1 className="m-2 text-white font-semibold">{column.title} / 1</h1>
                               </div>
@@ -374,29 +376,74 @@ function HomePage() {
                                               </Popover.Portal>
                                             </Popover.Root>
                                             {/* Nomear */}
+
+
+
                                             <div className="flex flex-row items-center gap-24">
                                               <div className="flex flex-row gap-2">
                                                 <FeatherIcon icon="circle" />
                                                 <h1>Grupo</h1>
                                               </div>
                                               <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
-                                                <h1 className="px-2 text-dark-black text-base font-medium">
-                                                  Criar Tarefa
-                                                </h1>
+                                                <input value={taskName} onChange={(e) => { setTaskName(e.currentTarget.value) }} className="outline-none bg-transparent px-2 text-dark-black text-base font-medium" />
                                               </div>
                                             </div>
                                             {/* Responsável */}
-                                            <div className="flex flex-row items-center gap-24">
-                                              <div className="flex flex-row gap-2">
-                                                <FeatherIcon icon="circle" />
-                                                <h1>Grupo</h1>
-                                              </div>
-                                              <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
-                                                <h1 className="px-2 text-dark-black text-base font-medium">
-                                                  Criar Tarefa
-                                                </h1>
-                                              </div>
-                                            </div>
+                                            <Popover.Root>
+                                              <Popover.Trigger>
+                                                <div className="flex flex-row items-center gap-24">
+                                                  <div className="flex flex-row gap-2">
+                                                    <FeatherIcon icon="circle" />
+                                                    <h1>Grupo</h1>
+                                                  </div>
+                                                  <div className="flex-1 bg-grey-color h-[40px] mr-6 rounded-[1px] items-center flex">
+                                                    <div className="w-full flex justify-center">
+                                                      <img className="flex justify-center items-center" src={UserIcon} />
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+                                              </Popover.Trigger>
+                                              <Popover.Portal>
+                                                <Popover.Content className="-mr-36" align="center">
+                                                  <motion.div
+                                                    className="z-20 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-64"
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    exit="exit"
+                                                    variants={scaleAnimation} // You can switch to slideAnimation if you prefer sliding
+                                                  >
+                                                    <div className="p-2">
+                                                      <div className="">
+                                                        <Popover.Close asChild>
+                                                          <button
+                                                            className="w-full flex rounded-md items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                              setSelectedGroup("Padrão")
+                                                            }
+                                                          >
+                                                            <img className="flex justify-center items-center mr-2" src={UserIcon} />
+                                                            Thigas
+                                                          </button>
+                                                        </Popover.Close>
+                                                        <Popover.Close asChild>
+                                                          <button
+                                                            className="w-full flex rounded-md items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                            onClick={() =>
+                                                              setSelectedGroup("Kanban")
+                                                            }
+                                                          >
+                                                            <img className="flex justify-center items-center mr-2" src={UserIcon} />
+                                                            Gustavo
+                                                          </button>
+                                                        </Popover.Close>
+                                                      </div>
+                                                    </div>
+                                                    <Popover.Arrow className="fill-current text-gray-200" />
+                                                  </motion.div>
+                                                </Popover.Content>
+                                              </Popover.Portal>
+                                            </Popover.Root>
                                           </div>
                                         </div>
 
