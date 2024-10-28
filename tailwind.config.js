@@ -3,6 +3,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        Nunito: ['Nunito', 'serif']
+      },
       backgroundImage: {
         'custom-gradient': 'linear-gradient(25deg, #ECEFF8 35.22%, #FFF 90.68%)'
       },

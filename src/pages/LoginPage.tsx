@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/authProvider";
-// import api from "../lib/axiosInstance";
-// import axios from "axios";
+import api from "../lib/axiosInstance";
 import { Input } from "../components/Input";
 import loginImage from "../assets/login_image.png";
 import logoImage from "../assets/logo.png";
@@ -19,9 +18,8 @@ function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //const response = await api.post(`${process.env.BASE_URL}/login`, data);
-    //setAuthToken(response.data.token);
-    setAuthToken("teste");
+    const response = await api.post(`api/login`, { email: email, password: password });
+    setAuthToken(response.data.token);
     navigate("/home");
   };
 

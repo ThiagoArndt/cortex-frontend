@@ -9,6 +9,22 @@ const axiosInstance = axios.create({
   },
 });
 
+axiosInstance.interceptors.request.use(
+  (request) => {
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+
+    if (token && !["/login", "/register"].includes(request.url || "")) {
+      request.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return request;
+  },
+  (error: Error) => {
+    return Promise.reject(error);
+  }
+);
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

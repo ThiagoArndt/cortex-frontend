@@ -6,12 +6,13 @@ import { Input } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 import FeatherIcons from "feather-icons-react";
 import { Transitions } from "../utils/Transitions";
-// import toast from "react-hot-toast";
-// import axios from "axios";
-// import api from "../lib/axiosInstance";
+import { useAuth } from "../providers/authProvider";
+import api from "../lib/axiosInstance";
+import toast from "react-hot-toast";
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const { setAuthToken } = useAuth();
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -22,8 +23,17 @@ function RegisterPage() {
 
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //const response = await api.get(`/error`);
-    navigate("/login");
+    if (password != confirmationPassword) {
+      toast.error("Senhas não são iguais");
+      return;
+    }
+    const response = await api.post(`api/register`, {
+      email: email,
+      username: username,
+      password: password,
+    });
+    setAuthToken(response.data.token);
+    navigate("/home");
   }
 
   return (

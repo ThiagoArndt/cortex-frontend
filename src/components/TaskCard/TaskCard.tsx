@@ -12,7 +12,7 @@ const TaskCard = ({ item, index }: any) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="justify-start w-full outline-none border-none focus:border-none focus:outline-none flex flex-col items-start p-4 min-h-[106px] rounded-md max-w-[311px] bg-white mt-4 shadow-sm"
+          className=" justify-start w-full outline-none border-none focus:border-none focus:outline-none flex flex-col items-start p-4 min-h-[106px] rounded-md max-w-[311px] bg-white mt-4 shadow-sm"
         >
           {/* Task Title */}
 
