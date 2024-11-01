@@ -4,7 +4,7 @@ import api from "../lib/axiosInstance";
 import { Input } from "../components/Input";
 import loginImage from "../assets/login_image.png";
 import logoImage from "../assets/logo.png";
-import Button from "../components/Button/Button";
+import Button from "../components/Button";
 import { useState } from "react";
 import FeatherIcons from "feather-icons-react";
 import { Transitions } from "../utils/Transitions";

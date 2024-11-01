@@ -26,12 +26,12 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
     const cookies = new Cookies();
-
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      delete axios.defaults.headers.common["Authorization"];
+    if (error.response?.status === 403) {
       cookies.remove("token");
     }
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+
 import Cookies from "universal-cookie";
 
 interface ChildrenInterface {
@@ -8,18 +9,18 @@ interface ChildrenInterface {
 
 const AuthContext = createContext<{
   token: string | null;
-  setAuthToken: (newToken: string) => Promise<void>;
+  setAuthToken: (newToken: string | null) => void;
 }>({
   token: null,
-  setAuthToken: async () => {},
+  setAuthToken: () => {},
 });
 
 const AuthProvider = ({ children }: ChildrenInterface) => {
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []);
 
   const [token, setToken] = useState<string | null>(cookies.get("token"));
 
-  const setAuthToken = async (newToken: string) => {
+  const setAuthToken = (newToken: string | null) => {
     try {
       setToken(newToken);
     } catch (error) {
@@ -29,7 +30,7 @@ const AuthProvider = ({ children }: ChildrenInterface) => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (token != null) {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       cookies.set("token", token);
     } else {

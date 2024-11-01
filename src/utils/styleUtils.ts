@@ -8,11 +8,24 @@ export function cn(...inputs: ClassValue[]) {
 export const getStatusColor = (status: string) => {
   switch (status) {
     case "TODO":
-      return "bg-yellow-500";
+      return "bg-green-color";
     case "IN_PROGRESS":
-      return "bg-orange-500";
+      return "bg-yellow-color";
     case "DONE":
-      return "bg-green-500";
+      return "bg-red-color";
+    default:
+      return "bg-gray-400";
+  }
+};
+
+export const getColumnStatusColor = (status: string) => {
+  switch (status) {
+    case "A Fazer":
+      return "bg-green-color";
+    case "Em Andamento":
+      return "bg-yellow-color";
+    case "Concluído":
+      return "bg-red-color";
     default:
       return "bg-gray-400";
   }

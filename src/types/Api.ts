@@ -15,7 +15,7 @@ export interface TaskDTO {
   /** @format int32 */
   groupId?: number;
   /** @format int32 */
-  assignedTo?: number;
+  assignedTo: UserDTO | null;
   status?: TaskDtoStatusEnum;
   /** @format date */
   dueDate?: string;
@@ -57,7 +57,27 @@ export interface ProjectInviteRequest {
   projectId?: number;
 }
 
-export type TaskDtoStatusEnum = "TODO" | "IN_PROGRESS" | "DONE";
+export interface UserDTO {
+  /** @format int32 */
+  userId?: number;
+  email?: string;
+  username?: string;
+}
+
+export interface Column {
+  title: string;
+  items: TaskDTO[];
+}
+
+export interface Columns {
+  [key: string]: Column;
+}
+
+export enum TaskDtoStatusEnum {
+  TODO = "TODO",
+  IN_PROGRESS = "IN_PROGRESS",
+  DONE = "DONE",
+}
 
 export type UpdateTaskData = TaskDTO;
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../components/Button/Button";
+import Button from "../components/Button";
 import registerImage from "../assets/register_image.png";
 import logoImage from "../assets/logo.png";
 import { Input } from "../components/Input";
