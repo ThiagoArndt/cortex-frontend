@@ -5,12 +5,12 @@ import AssignerTask from "./AssignerTask";
 import DateTask from "./DateTask";
 import GroupTask from "./GroupTask";
 import StatusTask from "./StatusTask";
-import { GroupDTO, TaskDTO, TaskDtoStatusEnum, UserDTO } from "../types/Api";
+import { GroupDTO, TaskResponse, TaskDtoStatusEnum, UserDTO } from "../types/Api";
 import { default as UserIcon } from "../assets/usericon.svg";
 import { formatDateToString } from "../utils/dateUtils";
 
 interface TaskEditContent {
-  task: TaskDTO;
+  task: TaskResponse;
   groups: GroupDTO[];
   selectedGroup: GroupDTO;
   projectUsers: UserDTO[];
@@ -29,16 +29,15 @@ const TaskEditContent = forwardRef(
     const [isTaskUpdated, setIsTaskUpdated] = useState<boolean>(false);
 
     const handleUpdateTask = () => {
-      console.log(taskDate);
-      console.log(formatDateToString(taskDate));
-      const updatedTask: TaskDTO = {
+      const updatedTask = {
         taskId: task.taskId,
-        assignedTo: taskUser,
+        assignedTo: taskUser != null ? taskUser.userId : null,
         dueDate: formatDateToString(taskDate),
         groupId: taskGroup.groupId,
         status: taskStatus,
         taskName: taskName,
       };
+
       return updatedTask;
     };
 

@@ -1,12 +1,12 @@
 import { Draggable } from "react-beautiful-dnd";
 import FeatherIcon from "feather-icons-react";
 import { default as UserIcon } from "../assets/usericon.svg";
-import { TaskDTO } from "../types/Api";
+import { TaskResponse } from "../types/Api";
 import { STATUS_MAPPINGS } from "../utils/mappings";
 import { formatDate } from "../utils/dateUtils";
 
 interface TaskCardInterface {
-  item: TaskDTO;
+  item: TaskResponse;
   index: number;
 }
 

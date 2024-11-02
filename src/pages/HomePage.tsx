@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import logoImage from "../assets/logo.png";
-import { default as UserIcon } from "../assets/usericon.svg";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import TaskCard from "../components/TaskCard";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -18,7 +16,7 @@ import {
   GroupDTO,
   ProjectDTO,
   ProjectInviteRequest,
-  TaskDTO,
+  TaskResponse,
   TaskDtoStatusEnum,
   UserDTO,
 } from "../types/Api";
@@ -39,6 +37,7 @@ import { getColumnStatusColor } from "../utils/styleUtils";
 import { sendEmailInvitation } from "../lib/services/emailService";
 import TaskEditContent from "../components/TaskEditContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Navbar from "../components/Navbar";
 
 function HomePage() {
   const [selectedProject, setSelectedProject] = useState<ProjectDTO | null>(null);
@@ -54,6 +53,8 @@ function HomePage() {
   });
 
   const [projectUsers, setProjectUsers] = useState<UserDTO[]>([]);
+
+  const taskEditRef = useRef(null);
 
   const retriveAllTasks = async (groupId: number) => {
     try {
@@ -142,7 +143,7 @@ function HomePage() {
           items: destItems,
         },
       });
-      await updateTask(removed);
+      await updateTask({ ...removed, assignedTo: removed.assignedTo?.userId });
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -199,7 +200,7 @@ function HomePage() {
       toast.error("Por favor, selecione um grupo");
       return;
     }
-    const task: TaskDTO = {
+    const task: TaskResponse = {
       assignedTo: null,
       taskName: "Criar Tarefa",
       groupId: selectedGroup.groupId,
@@ -303,13 +304,11 @@ function HomePage() {
     }
   };
 
-  const taskEditRef = useRef(null);
-
   const closeDialog = async () => {
     if (taskEditRef.current) {
       const current = taskEditRef.current as any;
       if (current.isTaskUpdated) {
-        const updatedTask = current.handleUpdateTask() as TaskDTO;
+        const updatedTask = current.handleUpdateTask();
         await updateTask(updatedTask);
         if (selectedGroup) {
           await fetchTasksForGroup(selectedGroup.groupId!);
@@ -320,17 +319,7 @@ function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background-color">
-      <nav className="p-1 w-full flex justify-between items-center">
-        <div>
-          <div className="h-auto ml-10 flex flex-row gap-2 items-center">
-            <img src={logoImage} alt="" className="w-6" />
-            <h1 className="text-dark-black font-bold text-xl">Cortex</h1>
-          </div>
-        </div>
-        <div className="flex items-center space-x-4 pr-4 py-1">
-          <img src={UserIcon} alt="" className="w-8 h-8 rounded-full" />
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="flex flex-1 gap-5">
         <Sidebar

@@ -14,7 +14,6 @@ export const fetchAllGroups = async (projectId: number): Promise<GroupDTO[]> => 
 
 export const acceptEmailInvitation = async (token: string): Promise<boolean> => {
   try {
-    console.log(token);
     await axiosInstance.post(`/api/email/accept`, null, {
       params: { token: token },
     });

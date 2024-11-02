@@ -10,9 +10,11 @@ interface ChildrenInterface {
 const AuthContext = createContext<{
   token: string | null;
   setAuthToken: (newToken: string | null) => void;
+  logOut: () => void;
 }>({
   token: null,
   setAuthToken: () => {},
+  logOut: () => {},
 });
 
 const AuthProvider = ({ children }: ChildrenInterface) => {
@@ -39,10 +41,17 @@ const AuthProvider = ({ children }: ChildrenInterface) => {
     }
   }, [token, cookies]);
 
+  const logOut = () => {
+    setToken(null);
+    delete axios.defaults.headers.common["Authorization"];
+    cookies.remove("token");
+  };
+
   const contextValue = useMemo(
     () => ({
       token,
       setAuthToken,
+      logOut,
     }),
     [token]
   );

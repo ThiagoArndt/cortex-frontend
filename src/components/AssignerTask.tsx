@@ -65,6 +65,17 @@ function AssignerTask({
                         </Popover.Close>
                       );
                     })}
+                  {selectedTaskUser != null ? (
+                    <Popover.Close asChild>
+                      <button
+                        className="w-full gap-2 flex rounded-md items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setSelectedTaskUser(null)}
+                      >
+                        <FeatherIcon size={20} icon="trash-2" className="text-red-700" />
+                        <span className="text-red-700">Remover responsável</span>
+                      </button>
+                    </Popover.Close>
+                  ) : null}
                 </div>
               </div>
               <Popover.Arrow className="fill-current text-gray-200" />

@@ -1,4 +1,4 @@
-import { Columns, TaskDTO, TaskDtoStatusEnum } from "../types/Api";
+import { Columns, TaskResponse, TaskDtoStatusEnum } from "../types/Api";
 
 export const COLUMN_TITLE_TO_STATUS: { [key: string]: TaskDtoStatusEnum } = {
   "A Fazer": TaskDtoStatusEnum.TODO,
@@ -12,7 +12,7 @@ export const STATUS_MAPPINGS = {
   DONE: "Concluído",
 };
 
-export const transformTasksToColumns = (tasks: TaskDTO[]): Columns => {
+export const transformTasksToColumns = (tasks: TaskResponse[]): Columns => {
   return {
     "column-1": {
       title: "A Fazer",
@@ -29,7 +29,7 @@ export const transformTasksToColumns = (tasks: TaskDTO[]): Columns => {
   };
 };
 
-export const transformColumnsToTasks = (columns: Columns): TaskDTO[] => {
+export const transformColumnsToTasks = (columns: Columns): TaskResponse[] => {
   return [
     ...columns["column-1"].items.map((item) => ({
       ...item,
@@ -46,7 +46,7 @@ export const transformColumnsToTasks = (columns: Columns): TaskDTO[] => {
   ];
 };
 
-export const transformTaskToColumn = (task: TaskDTO): TaskDTO => {
+export const transformTaskToColumn = (task: TaskResponse): TaskResponse => {
   return {
     ...task,
     status: COLUMN_TITLE_TO_STATUS[task.status as unknown as string],

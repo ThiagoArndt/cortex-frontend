@@ -7,7 +7,7 @@ const AcceptInvitation = () => {
   const [searchParams] = useSearchParams();
   const invitationToken = searchParams.get("token");
   const navigate = useNavigate();
-  console.log(invitationToken);
+
   useEffect(() => {
     const acceptInvitation = async () => {
       const isSuccess = await acceptEmailInvitation(invitationToken ?? "");

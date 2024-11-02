@@ -8,14 +8,27 @@
  * ---------------------------------------------------------------
  */
 
-export interface TaskDTO {
+export interface TaskRequest {
   /** @format int32 */
   taskId?: number;
   taskName?: string;
   /** @format int32 */
   groupId?: number;
   /** @format int32 */
-  assignedTo: UserDTO | null;
+  assignedTo?: number | null;
+  status?: TaskDtoStatusEnum;
+  /** @format date */
+  dueDate?: string;
+}
+
+export interface TaskResponse {
+  /** @format int32 */
+  taskId?: number;
+  taskName?: string;
+  /** @format int32 */
+  groupId?: number;
+  /** @format int32 */
+  assignedTo?: UserDTO | null;
   status?: TaskDtoStatusEnum;
   /** @format date */
   dueDate?: string;
@@ -66,7 +79,7 @@ export interface UserDTO {
 
 export interface Column {
   title: string;
-  items: TaskDTO[];
+  items: TaskResponse[];
 }
 
 export interface Columns {
@@ -79,9 +92,9 @@ export enum TaskDtoStatusEnum {
   DONE = "DONE",
 }
 
-export type UpdateTaskData = TaskDTO;
+export type UpdateTaskData = TaskResponse;
 
-export type CreateTaskData = TaskDTO;
+export type CreateTaskData = TaskResponse;
 
 export type RegisterData = AuthenticationResponse;
 
@@ -93,7 +106,7 @@ export type LoginData = object;
 
 export type CreateGroupData = GroupDTO;
 
-export type GetGroupTasksData = TaskDTO[];
+export type GetGroupTasksData = TaskResponse[];
 
 export type GetProjectData = ProjectDTO;
 

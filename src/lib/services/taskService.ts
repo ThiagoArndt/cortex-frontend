@@ -1,7 +1,7 @@
 import axiosInstance from "../axiosInstance";
-import { TaskDTO } from "../../types/Api";
+import { TaskRequest, TaskResponse } from "../../types/Api";
 
-export const fetchAllTasks = async (groupId: number): Promise<TaskDTO[]> => {
+export const fetchAllTasks = async (groupId: number): Promise<TaskResponse[]> => {
   try {
     const response = await axiosInstance.get(`/api/tasks/group/${groupId}`);
     return response.data;
@@ -11,7 +11,7 @@ export const fetchAllTasks = async (groupId: number): Promise<TaskDTO[]> => {
   }
 };
 
-export const updateTask = async (data: TaskDTO): Promise<TaskDTO> => {
+export const updateTask = async (data: TaskRequest): Promise<TaskResponse> => {
   try {
     const response = await axiosInstance.put(`/api/tasks/${data.taskId!}`, data);
     return response.data;
@@ -21,7 +21,7 @@ export const updateTask = async (data: TaskDTO): Promise<TaskDTO> => {
   }
 };
 
-export const createTask = async (data: TaskDTO): Promise<TaskDTO> => {
+export const createTask = async (data: TaskResponse): Promise<TaskResponse> => {
   try {
     const response = await axiosInstance.post(`/api/tasks`, data);
     return response.data;
