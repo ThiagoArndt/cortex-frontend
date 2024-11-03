@@ -52,7 +52,7 @@ const GroupItem: React.FC<GroupItemProps> = ({
     <div key={group.groupId}>
       <div
         role="presentation"
-        className="w-full justify-between flex rounded-md items-center px-4 py-2 text-sm text-gray-700  hover:bg-gray-100"
+        className="w-full cursor-pointer justify-between flex rounded-md items-center px-4 py-2 text-sm text-gray-700  hover:bg-gray-100"
         onClick={handleGroupChange}
       >
         <div className="flex flex-row">
@@ -85,13 +85,13 @@ const GroupItem: React.FC<GroupItemProps> = ({
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              className="hover:bg-primary-color hover:bg-opacity-25 p-[2px] rounded-md"
+              className="hover:bg-primary-color hover:bg-opacity-25 p-[2px] rounded-md cursor-pointer"
             >
               <FeatherIcon className="" icon="more-horizontal" size={15} />
             </div>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Content sideOffset={0} align="start">
+            <Popover.Content sideOffset={0} align="start" className="cursor-pointer">
               <motion.div
                 className="z-20 bg-white border border-gray-200 rounded-lg shadow-lg p-2 w-64"
                 initial="hidden"

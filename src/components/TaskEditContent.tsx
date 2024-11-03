@@ -5,9 +5,18 @@ import AssignerTask from "./AssignerTask";
 import DateTask from "./DateTask";
 import GroupTask from "./GroupTask";
 import StatusTask from "./StatusTask";
-import { GroupDTO, TaskResponse, TaskDtoStatusEnum, UserDTO } from "../types/Api";
-import { default as UserIcon } from "../assets/usericon.svg";
+import {
+  GroupDTO,
+  TaskResponse,
+  TaskDtoStatusEnum,
+  UserDTO,
+  CommentResponse,
+  CommentRequest,
+} from "../types/Api";
+
 import { formatDateToString } from "../utils/dateUtils";
+import CommentTask from "./CommentTask";
+import { addComment } from "../lib/services/commentService";
 
 interface TaskEditContent {
   task: TaskResponse;
@@ -26,6 +35,7 @@ const TaskEditContent = forwardRef(
       task.dueDate != null ? new Date(task.dueDate) : new Date()
     );
     const [taskStatus, setTaskStatus] = useState<TaskDtoStatusEnum>(task.status!);
+    const [taskComments, setTaskComments] = useState<CommentResponse[]>(task.comments ?? []);
     const [isTaskUpdated, setIsTaskUpdated] = useState<boolean>(false);
 
     const handleUpdateTask = () => {
@@ -36,6 +46,7 @@ const TaskEditContent = forwardRef(
         groupId: taskGroup.groupId,
         status: taskStatus,
         taskName: taskName,
+        comments: taskComments,
       };
 
       return updatedTask;
@@ -45,6 +56,10 @@ const TaskEditContent = forwardRef(
       handleUpdateTask,
       isTaskUpdated,
     }));
+
+    const handleAddComment = async (comment: CommentRequest): Promise<CommentResponse> => {
+      return await addComment(comment, task.taskId!);
+    };
 
     return (
       <div className="flex h-full flex-row">
@@ -102,38 +117,12 @@ const TaskEditContent = forwardRef(
 
         <div className="w-[2px] h-[100%] bg-background-color">.</div>
 
-        <div className="flex flex-col gap-10 ml-[50px] flex-1 pt-[56px] min-w-[490px]">
-          <div>
-            <textarea
-              placeholder="Escreva uma atualização"
-              id="autoExpandTextarea"
-              className="w-full border-[2px] bg-transparent border-background-color rounded-md p-2 text-gray-900 focus:outline-none focus:ring-0 focus:ring-blue-500 focus:border-blue-500 resize-none overflow-hidden"
-              rows={1}
-              onInput={(event) => {
-                const textarea = event.target as HTMLTextAreaElement;
-                textarea.style.height = "auto";
-                const maxRows = 3;
-                const lineHeight = 24;
-                const maxHeight = lineHeight * maxRows;
-                textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
-              }}
-            ></textarea>
-          </div>
-          <div className="justify-start p-4 items-start flex-row rounded-md flex border-[2px] min-h-[135px] h-auto border-background-color">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <img alt="" src={UserIcon} className="w-10 aspect-square" />
-                <h1 className="text-dark-black flex flex-row items-center gap-2">
-                  Thiago
-                  <span>
-                    <div className="w-[9px] h-[9px] bg-green-400 rounded-full"></div>
-                  </span>
-                </h1>
-              </div>
-              <h1 className="text-dark-black">teste teste</h1>
-            </div>
-          </div>
-        </div>
+        <CommentTask
+          handleAddComment={handleAddComment}
+          setTaskComments={setTaskComments}
+          taskComments={taskComments}
+          setIsTaskUpdated={setIsTaskUpdated}
+        />
       </div>
     );
   }

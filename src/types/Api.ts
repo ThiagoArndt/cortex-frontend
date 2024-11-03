@@ -32,6 +32,20 @@ export interface TaskResponse {
   status?: TaskDtoStatusEnum;
   /** @format date */
   dueDate?: string;
+  comments?: CommentResponse[];
+}
+
+export interface CommentResponse {
+  /** @format int32 */
+  commentId?: number;
+  user?: UserDTO;
+  content?: string;
+  /** @format date-time */
+  createdAt?: string;
+}
+
+export interface CommentRequest {
+  content?: string;
 }
 
 export interface RegisterRequest {
