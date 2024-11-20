@@ -1,9 +1,9 @@
 # Cortex - Gerenciamento de Tarefas
 
 ### Grupo de Desenvolvimento
-- Gustavo J. Rosa
-- Thomas Taiga Nakagawa
-- Thiago Cirne
+- Gustavo Jose Rosa
+- Thomas Taiga Martinez Nakagawa
+- Thiago Cirne Arndt
 - Khatlyllen Vyctória Constantino
 
 ---
